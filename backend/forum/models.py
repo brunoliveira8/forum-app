@@ -13,7 +13,7 @@ class Topic(models.Model):
 
 
 class Question(models.Model):
-    user = models.ForeignKey(
+    owner = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name="questions"
