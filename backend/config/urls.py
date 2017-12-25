@@ -17,6 +17,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 
 from rest_framework import routers
+from rest_framework.documentation import include_docs_urls
 
 from forum.views import TopicViewSet, QuestionViewSet, AnswerViewSet
 
@@ -27,5 +28,6 @@ router.register(r'answers', AnswerViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^api-docs/', include_docs_urls(title='Forum App API')),
     url(r'^api/', include(router.urls)),
 ]
