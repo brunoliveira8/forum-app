@@ -18,10 +18,11 @@ from django.contrib import admin
 
 from rest_framework import routers
 
-from forum.views import TopicViewSet
+from forum.views import TopicViewSet, QuestionViewSet
 
 router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'topics', TopicViewSet)
+router.register(r'questions', QuestionViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),

@@ -13,13 +13,14 @@ class Topic(models.Model):
 
 
 class Question(models.Model):
-    user = models.ForeignKey(
+    owner = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name="questions"
     )
     title = models.CharField(max_length=100, blank=False)
     description = models.TextField(blank=False)
+    topics = models.ManyToManyField(Topic, related_name='questions')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
