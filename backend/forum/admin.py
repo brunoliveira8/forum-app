@@ -7,4 +7,4 @@ from .models import Topic, Question
 class TopicAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
 
-admin.register(Question)
+admin.site.register(Question)
