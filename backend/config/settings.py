@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #third-party packages
     'rest_framework',
+    'django_filters',
+    'crispy_forms',
     #project apps
     'forum.apps.ForumConfig'
 ]

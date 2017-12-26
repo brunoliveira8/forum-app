@@ -1,6 +1,8 @@
 from rest_framework import viewsets
 from rest_framework import filters
 
+from django_filters.rest_framework import DjangoFilterBackend
+
 from .models import Topic, Question, Answer
 from .serializers import TopicSerializer, QuestionSerializer, AnswerSerializer
 
@@ -25,10 +27,11 @@ class QuestionViewSet(viewsets.ModelViewSet):
     """
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
-    filter_backends = (filters.SearchFilter, filters.OrderingFilter)
+    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
     search_fields = ('title',)
     ordering_fields = ('created_at', 'title', 'updated_at',)
     ordering = ('created_at', 'title', 'updated_at',)
+    filter_fields = ['owner', 'topics',]
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
