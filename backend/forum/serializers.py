@@ -21,7 +21,7 @@ class TopicSerializer(serializers.HyperlinkedModelSerializer):
 class QuestionSummarySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Question
-        fields = ('url', 'title', )
+        fields = ('id', 'url', 'title', )
 
 
 class AnswerSerializer(serializers.HyperlinkedModelSerializer):
@@ -52,4 +52,9 @@ class QuestionSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Question
-        fields = ('id','owner', 'title', 'description', 'topics', 'topics_repr', 'answers', 'created_at', 'updated_at',)
+        fields = ('id', 'url', 'owner', 'title', 'description', 'topics', 'topics_repr', 'answers', 'created_at', 'updated_at',)
+
+
+class QuestionListSerializer(QuestionSerializer):
+    class Meta(QuestionSerializer.Meta):
+        fields = ('id', 'url', 'owner', 'title', 'description', 'topics', 'topics_repr', 'created_at', 'updated_at',)
