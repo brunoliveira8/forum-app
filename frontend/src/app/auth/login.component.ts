@@ -1,6 +1,9 @@
 import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
+import { AuthService } from './auth.service';
+import { Subscription } from 'rxjs/Subscription';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -9,8 +12,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class LoginComponent implements OnInit,OnDestroy {
 
   loginForm: FormGroup;
+  loginSuccessfully: Subscription;
+  loginErrors: any;
 
-  constructor(private formBuilder: FormBuilder, private renderer: Renderer2) {
+  constructor(private authService: AuthService, private formBuilder: FormBuilder, private renderer: Renderer2) {
     this.loginForm = this.formBuilder.group({
       'username': ['', Validators.required],
       'password': ['', Validators.required],
@@ -20,15 +25,27 @@ export class LoginComponent implements OnInit,OnDestroy {
   ngOnInit() {
     this.renderer.addClass(document.body, 'login-page');
     this.renderer.addClass(document.body, 'hold-transition');
+
+    this.loginSuccessfully = this.authService.loginSuccessfully.subscribe(data =>{
+      if (data['success'] == false){
+        this.loginErrors = data['messages'];
+      }
+      else {
+        //navigate to home page
+      }
+    });
   }
 
   ngOnDestroy() {
     this.renderer.removeClass(document.body, 'login-page');
     this.renderer.removeClass(document.body, 'hold-transition');
+
+    this.loginSuccessfully.unsubscribe();
   }
 
   login(){
-    console.log(this.loginForm.value);
+    this.authService.login(this.loginForm.value.username, this.loginForm.value.password);
+    console.log(this.loginForm);
   }
 
 }
