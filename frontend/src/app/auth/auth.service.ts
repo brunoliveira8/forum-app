@@ -23,6 +23,17 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
+  private setAuthUser(authToken: string){
+    const authUserUrl = this.authUrl + "me/";
+    this.http.get<User>(authUserUrl, {
+      headers: new HttpHeaders().set('Authorization', 'Token ' + authToken)
+      }
+    ).subscribe(data => {
+      this.authUser = data;
+    });
+  }
+
+
   login(username: string , password: string){
     const loginUrl = this.authUrl + "token/create/";
     this.http.post(loginUrl, {username: username, password: password}).subscribe(
@@ -37,19 +48,6 @@ export class AuthService {
     );
   }
 
-  private setAuthUser(authToken: string){
-    const authUserUrl = this.authUrl + "me/";
-    this.http.get<User>(authUserUrl, {
-      headers: new HttpHeaders().set('Authorization', 'Token ' + authToken)
-      }
-    ).subscribe(data => {
-      this.authUser = data;
-    });
-  }
-
-  isAuthenticated() {
-    return this.authToken != null;
-  }
 
   register(username: string, email: string, password: string){
     const registerUrl = this.authUrl + "users/create/";
@@ -61,6 +59,17 @@ export class AuthService {
         this.successfulRegistration.next({ success: false, messages: err['error'] });
       }
     );
+  }
+
+  logout(){
+    const logoutUrl = this.authUrl + "token/destroy/";
+    this.http.post(logoutUrl, {
+      headers: new HttpHeaders().set('Authorization', 'Token ' + this.authToken)
+    }).subscribe();
+  }
+
+  isAuthenticated() {
+    return this.authToken != null;
   }
 
 }
