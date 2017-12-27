@@ -18,7 +18,8 @@ export class AuthService {
 
   public authToken: string;
   public authUser: User;
-  public loginSuccessfully = new Subject<{success: boolean, messages: any}>();
+  public successfulLogin = new Subject<{success: boolean, messages: any}>();
+  public successfulRegistration = new Subject<{success: boolean, messages: any}>();
 
   constructor(private http: HttpClient) { }
 
@@ -28,10 +29,10 @@ export class AuthService {
       data => {
         this.authToken = data['auth_token'];
         this.setAuthUser(this.authToken);
-        this.loginSuccessfully.next({ success: true, messages: "" });
+        this.successfulLogin.next({ success: true, messages: "" });
       },
       err => {
-        this.loginSuccessfully.next({ success: false, messages: err['error'] });
+        this.successfulLogin.next({ success: false, messages: err['error'] });
       }
     );
   }
@@ -48,6 +49,18 @@ export class AuthService {
 
   isAuthenticated() {
     return this.authToken != null;
+  }
+
+  register(username: string, email: string, password: string){
+    const registerUrl = this.authUrl + "users/create/";
+    this.http.post(registerUrl, {username: username, email:email, password: password}).subscribe(
+      data => {
+        this.successfulRegistration.next({ success: true, messages: "" });
+      },
+      err => {
+        this.successfulRegistration.next({ success: false, messages: err['error'] });
+      }
+    );
   }
 
 }

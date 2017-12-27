@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs/Subscription';
 export class LoginComponent implements OnInit,OnDestroy {
 
   loginForm: FormGroup;
-  loginSuccessfully: Subscription;
+  successfulLogin: Subscription;
   loginErrors: any;
 
   constructor(private authService: AuthService, private formBuilder: FormBuilder, private renderer: Renderer2) {
@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit,OnDestroy {
     this.renderer.addClass(document.body, 'login-page');
     this.renderer.addClass(document.body, 'hold-transition');
 
-    this.loginSuccessfully = this.authService.loginSuccessfully.subscribe(data =>{
+    this.successfulLogin = this.authService.successfulLogin.subscribe(data =>{
       if (data['success'] == false){
         this.loginErrors = data['messages'];
       }
@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit,OnDestroy {
     this.renderer.removeClass(document.body, 'login-page');
     this.renderer.removeClass(document.body, 'hold-transition');
 
-    this.loginSuccessfully.unsubscribe();
+    this.successfulLogin.unsubscribe();
   }
 
   login(){
