@@ -9,7 +9,7 @@ from .models import Topic, Question, Answer
 class TopicSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Topic
-        fields = '__all__'
+        fields = ('id', 'url', 'name', 'slug')
 
 
 class QuestionSummarySerializer(serializers.HyperlinkedModelSerializer):
