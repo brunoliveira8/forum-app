@@ -10,7 +10,6 @@ import { LoginComponent } from './auth/login.component';
 import { SignupComponent } from './auth/signup.component';
 import { AuthService } from './auth/auth.service';
 import { AuthGuard } from './auth/auth-guard.service';
-import { LogoutComponent } from './auth/logout.component';
 import { QuestionsComponent } from './questions/questions.component';
 import { QuestionNewComponent } from './questions/question-new.component';
 import { HeaderComponent } from './header.component';
@@ -21,7 +20,6 @@ import { HeaderComponent } from './header.component';
     AppComponent,
     LoginComponent,
     SignupComponent,
-    LogoutComponent,
     QuestionsComponent,
     QuestionNewComponent,
     HeaderComponent
