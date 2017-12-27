@@ -13,6 +13,7 @@ import { AuthGuard } from './auth/auth-guard.service';
 import { LogoutComponent } from './auth/logout.component';
 import { QuestionsComponent } from './questions/questions.component';
 import { QuestionNewComponent } from './questions/question-new.component';
+import { HeaderComponent } from './header.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { QuestionNewComponent } from './questions/question-new.component';
     SignupComponent,
     LogoutComponent,
     QuestionsComponent,
-    QuestionNewComponent
+    QuestionNewComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
