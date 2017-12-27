@@ -11,6 +11,8 @@ import { SignupComponent } from './auth/signup.component';
 import { AuthService } from './auth/auth.service';
 import { AuthGuard } from './auth/auth-guard.service';
 import { LogoutComponent } from './auth/logout.component';
+import { QuestionsComponent } from './questions/questions.component';
+import { QuestionNewComponent } from './questions/question-new.component';
 
 
 @NgModule({
@@ -18,7 +20,9 @@ import { LogoutComponent } from './auth/logout.component';
     AppComponent,
     LoginComponent,
     SignupComponent,
-    LogoutComponent
+    LogoutComponent,
+    QuestionsComponent,
+    QuestionNewComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +30,7 @@ import { LogoutComponent } from './auth/logout.component';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [AuthService],
+  providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
