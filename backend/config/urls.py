@@ -29,5 +29,7 @@ router.register(r'answers', AnswerViewSet)
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api-docs/', include_docs_urls(title='Forum App API')),
+    url(r'^api-auth/', include('djoser.urls')),
+    url(r'^api-auth/', include('djoser.urls.authtoken')),
     url(r'^api/', include(router.urls)),
 ]
