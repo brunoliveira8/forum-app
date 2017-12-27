@@ -47,8 +47,3 @@ class QuestionSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Question
         fields = ('id', 'url', 'owner', 'title', 'description', 'topics', 'topics_repr', 'answers', 'created_at', 'updated_at',)
-
-
-class QuestionListSerializer(QuestionSerializer):
-    class Meta(QuestionSerializer.Meta):
-        fields = ('id', 'url', 'owner', 'title', 'description', 'topics', 'topics_repr', 'created_at', 'updated_at',)

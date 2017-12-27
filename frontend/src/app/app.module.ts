@@ -18,6 +18,7 @@ import { QuestionsComponent } from './questions/questions.component';
 import { QuestionNewComponent } from './questions/question-new.component';
 import { HeaderComponent } from './header.component';
 import { ForumService } from './questions/forum.service';
+import { QuestionListComponent } from './questions/question-list.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { ForumService } from './questions/forum.service';
     SignupComponent,
     QuestionsComponent,
     QuestionNewComponent,
-    HeaderComponent
+    HeaderComponent,
+    QuestionListComponent
   ],
   imports: [
     BrowserModule,

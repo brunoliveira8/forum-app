@@ -4,7 +4,7 @@ from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
 
 from .models import Topic, Question, Answer
-from .serializers import TopicSerializer, QuestionSerializer, QuestionListSerializer, AnswerSerializer
+from .serializers import TopicSerializer, QuestionSerializer, AnswerSerializer
 
 
 # Create your views here.
@@ -32,12 +32,6 @@ class QuestionViewSet(viewsets.ModelViewSet):
     ordering_fields = ('created_at', 'title', 'updated_at',)
     ordering = ('created_at', 'title', 'updated_at',)
     filter_fields = ['owner', 'topics',]
-
-    def get_serializer_class(self):
-        if self.action == 'list':
-            return QuestionListSerializer
-        else:
-            return QuestionSerializer
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)

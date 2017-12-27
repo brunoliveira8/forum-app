@@ -31,4 +31,10 @@ export class ForumService {
     )
   }
 
+  getQuestions(filter = {}){
+    return this.http.get(
+      this.questionUrl,
+      {headers: this.headers}
+    )
+  }
 }
