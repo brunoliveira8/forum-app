@@ -6,3 +6,4 @@ coreapi==2.3.3
 django-filter==1.1.0
 django-crispy-forms==1.7.0
 djoser==1.1.5
+django-cors-headers==2.1.0

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'djoser',
     'django_filters',
     'crispy_forms',
+    'corsheaders',
     #project apps
     'accounts.apps.AccountsConfig',
     'forum.apps.ForumConfig'
@@ -51,6 +52,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -132,7 +134,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# DRF Configuration
+# DRF Settings
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
@@ -144,3 +146,6 @@ REST_FRAMEWORK = {
         'config.permissions.IsOwnerOrReadOnly',
     )
 }
+
+# CORS Settings
+CORS_ORIGIN_ALLOW_ALL = True
