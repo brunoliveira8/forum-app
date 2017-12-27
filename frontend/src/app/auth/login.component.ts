@@ -49,7 +49,6 @@ export class LoginComponent implements OnInit,OnDestroy {
 
   login(){
     this.authService.login(this.loginForm.value.username, this.loginForm.value.password);
-    console.log(this.loginForm);
   }
 
 }
