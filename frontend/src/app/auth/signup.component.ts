@@ -2,33 +2,34 @@ import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
+  selector: 'app-signup',
+  templateUrl: './signup.component.html',
   styles: []
 })
-export class LoginComponent implements OnInit,OnDestroy {
+export class SignupComponent implements OnInit, OnDestroy {
 
-  loginForm: FormGroup;
+  registerForm: FormGroup;
 
   constructor(private formBuilder: FormBuilder, private renderer: Renderer2) {
-    this.loginForm = this.formBuilder.group({
+    this.registerForm = this.formBuilder.group({
       'username': ['', Validators.required],
+      'email': ['', [Validators.required, Validators.email]],
       'password': ['', Validators.required],
     });
   }
 
   ngOnInit() {
-    this.renderer.addClass(document.body, 'login-page');
+    this.renderer.addClass(document.body, 'register-page');
     this.renderer.addClass(document.body, 'hold-transition');
   }
 
   ngOnDestroy() {
-    this.renderer.removeClass(document.body, 'login-page');
+    this.renderer.removeClass(document.body, 'register-page');
     this.renderer.removeClass(document.body, 'hold-transition');
   }
 
-  login(){
-    console.log(this.loginForm.value);
-  }
+  register(){
+    console.log(this.registerForm.value);
 
+  }
 }
