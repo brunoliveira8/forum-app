@@ -19,6 +19,7 @@ import { QuestionNewComponent } from './questions/question-new.component';
 import { HeaderComponent } from './header.component';
 import { ForumService } from './questions/forum.service';
 import { QuestionListComponent } from './questions/question-list.component';
+import { MyQuestionsComponent } from './questions/my-questions.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { QuestionListComponent } from './questions/question-list.component';
     QuestionsComponent,
     QuestionNewComponent,
     HeaderComponent,
-    QuestionListComponent
+    QuestionListComponent,
+    MyQuestionsComponent,
   ],
   imports: [
     BrowserModule,

@@ -6,6 +6,7 @@ import { SignupComponent } from './auth/signup.component';
 import { QuestionsComponent } from './questions/questions.component';
 import { QuestionListComponent } from './questions/question-list.component';
 import { QuestionNewComponent } from './questions/question-new.component';
+import { MyQuestionsComponent } from './questions/my-questions.component';
 import { AuthGuard } from './auth/auth-guard.service';
 
 const routes: Routes = [
@@ -15,7 +16,8 @@ const routes: Routes = [
   { path: 'questions', component: QuestionsComponent, canActivate: [AuthGuard],
     children: [
       { path: "", component: QuestionListComponent},
-      { path: 'new', component: QuestionNewComponent}
+      { path: 'new', component: QuestionNewComponent},
+      { path: 'me', component: MyQuestionsComponent}
     ]
   }
 ];
