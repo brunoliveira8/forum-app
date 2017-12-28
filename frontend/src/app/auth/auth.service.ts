@@ -63,10 +63,10 @@ export class AuthService {
 
   logout(){
     const logoutUrl = this.authUrl + "token/destroy/";
-    this.authToken = null;
-    this.http.post(logoutUrl, {
+    this.http.post(logoutUrl, null, {
       headers: new HttpHeaders().set('Authorization', 'Token ' + this.authToken)
     }).subscribe();
+    this.authToken = null;
   }
 
   isAuthenticated() {
