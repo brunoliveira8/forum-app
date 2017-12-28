@@ -30,7 +30,7 @@ class QuestionViewSet(viewsets.ModelViewSet):
     filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
     search_fields = ('title',)
     ordering_fields = ('created_at', 'title', 'updated_at',)
-    ordering = ('created_at', 'title', 'updated_at',)
+    ordering = ('-created_at', 'title', '-updated_at',)
     filter_fields = ['owner', 'topics',]
 
     def perform_create(self, serializer):
@@ -46,7 +46,7 @@ class AnswerViewSet(viewsets.ModelViewSet):
     filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
     search_fields = ('text',)
     ordering_fields = ('created_at', 'updated_at',)
-    ordering = ('created_at', 'updated_at',)
+    ordering = ('-created_at', '-updated_at',)
     filter_fields = ['owner',]
 
     def perform_create(self, serializer):
