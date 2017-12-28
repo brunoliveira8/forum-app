@@ -8,9 +8,11 @@ import { AuthService } from './../auth/auth.service';
 
 @Injectable()
 export class ForumService {
+
   private apiUrl = environment.apiUrl + "api/";
   private topicUrl = this.apiUrl + "topics";
   private questionUrl = this.apiUrl + 'questions';
+  private answerUrl = this.apiUrl + 'answers';
   private headers: HttpHeaders;
 
   constructor(private authService: AuthService, private http: HttpClient) {
@@ -27,15 +29,31 @@ export class ForumService {
   createQuestion(title: string, topics: string[], description: string) {
     return this.http.post(
       this.questionUrl,
-      {title: title, topics: topics, description: description},
-      {headers: this.headers}
+      { title: title, topics: topics, description: description },
+      { headers: this.headers }
+    )
+  }
+
+  getQuestion(questionId: string){
+    return this.http.get(
+      this.questionUrl + "/" + questionId,
+      { headers: this.headers }
     )
   }
 
   getQuestions(filter:any = {}){
     return this.http.get(
       this.questionUrl,
-      {headers: this.headers, params: filter}
+      { headers: this.headers, params: filter }
     )
   }
+
+  createAnswer(text: string, questionId: string){
+    return this.http.post(
+      this.answerUrl,
+      { text: text, question: questionId },
+      { headers: this.headers }
+    )
+  }
+
 }

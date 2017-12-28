@@ -7,6 +7,7 @@ import { QuestionsComponent } from './questions/questions.component';
 import { QuestionListComponent } from './questions/question-list.component';
 import { QuestionNewComponent } from './questions/question-new.component';
 import { MyQuestionsComponent } from './questions/my-questions.component';
+import { QuestionDetailComponent } from './questions/question-detail.component';
 import { AuthGuard } from './auth/auth-guard.service';
 
 const routes: Routes = [
@@ -17,7 +18,8 @@ const routes: Routes = [
     children: [
       { path: "", component: QuestionListComponent},
       { path: 'new', component: QuestionNewComponent},
-      { path: 'me', component: MyQuestionsComponent}
+      { path: 'me', component: MyQuestionsComponent},
+      { path: ':id', component: QuestionDetailComponent}
     ]
   }
 ];

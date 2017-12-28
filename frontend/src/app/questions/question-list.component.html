@@ -38,7 +38,7 @@
               <div class="user-block">
                 <img class="img-circle img-bordered-sm" src="/assets/img/user.png" alt="user image">
                 <span class="username">
-                  <a routerLink="/questions/{{q.id}}">{{q.title}}</a>
+                  <a [routerLink]="['/questions', q.id]" >{{q.title}}</a>
                 </span>
                 <span class="description">{{q.owner.username}} - {{q.created_at | date:'short'}}</span>
               </div>
