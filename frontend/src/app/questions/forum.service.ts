@@ -31,6 +31,14 @@ export class ForumService {
     )
   }
 
+  updateQuestion(questionId: string, title: string, description: string) {
+    return this.http.patch(
+      this.questionUrl + "/" + questionId,
+      { title: title, description: description },
+      { headers: new HttpHeaders().set('Authorization', 'Token ' + this.authService.authToken) }
+    )
+  }
+
   getQuestion(questionId: string){
     return this.http.get(
       this.questionUrl + "/" + questionId,
