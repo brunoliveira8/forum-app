@@ -1,23 +1,37 @@
 <div class="container">
   <!-- Main content -->
   <section class="content">
-    <div class="box box-primary"  *ngIf="question">
+    <div class="box box-primary" *ngIf="question">
       <div class="box-header with-border">
         <h3 class="box-title">Question</h3>
+        <div class="box-tools pull-right">
+          <ng-container *ngIf="!isEditable">
+            <button type="button" class="btn btn-box-tool" (click)="onEdit()">
+              <i class="fa fa-pencil-square-o"></i>
+            </button>
+          </ng-container>
+
+        </div>
       </div>
       <div class="box-body">
         <div class="post">
           <div class="user-block">
             <img class="img-circle img-bordered-sm" src="/assets/img/user.png" alt="user image">
-            <span class="username">
+            <span class="username" *ngIf="!isEditable">
               <a [routerLink]="['/questions', question.id]">{{question.title}}</a>
+            </span>
+            <span class="username" *ngIf="isEditable">
+              <input #title type="text" class="form-control" (input)="titleEdit = $event.target.value" [value]="question.title">
             </span>
             <span class="description">{{question.owner.username}} - {{question.created_at | date:'short'}}</span>
           </div>
           <!-- /.user-block -->
-          <p>
+          <p *ngIf="!isEditable">
             {{ question.description }}
           </p>
+          <ng-container *ngIf="isEditable">
+            <textarea class="form-control" rows="3" (input)="descriptionEdit = $event.target.value" [value]="question.description" ></textarea>
+          </ng-container>
           <ul class="list-inline">
             <li *ngFor="let t of question.topics_repr">
               <span class="label label-primary">{{t.name}}</span>
@@ -29,6 +43,10 @@
             </li>
           </ul>
         </div>
+        <ng-container *ngIf="isEditable">
+            <button class="btn btn-sm btn-success" (click)="onEditSave(title)">Save</button>
+            <button class="btn btn-sm btn-default" (click)="onEditCancel()">Cancel</button>
+        </ng-container>
       </div>
       <!-- /.box-body -->
       <div class="box-footer box-comments" *ngIf="question.answers.length > 0">
@@ -65,3 +83,4 @@
   <!-- /.content -->
 </div>
 <!-- /.container -->
+<simple-notifications></simple-notifications>
