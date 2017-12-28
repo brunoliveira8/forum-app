@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 import { environment } from '../../environments/environment';
 
 import { AuthService } from './../auth/auth.service';
+
 
 @Injectable()
 export class ForumService {
@@ -31,10 +32,10 @@ export class ForumService {
     )
   }
 
-  getQuestions(filter = {}){
+  getQuestions(filter:any = {}){
     return this.http.get(
       this.questionUrl,
-      {headers: this.headers}
+      {headers: this.headers, params: filter}
     )
   }
 }
