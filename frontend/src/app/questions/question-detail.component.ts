@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { ForumService } from './forum.service';
-import { ActivatedRoute } from '@angular/router';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({
@@ -11,15 +12,23 @@ import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 })
 export class QuestionDetailComponent implements OnInit, OnDestroy {
 
-  question: any;
   private sub: any;
+  private questionId;
+  question: any;
+  answerForm: FormGroup;
 
-  constructor(private formService: ForumService, private route: ActivatedRoute) { }
+  constructor(private formService: ForumService,
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder) {
+      this.answerForm = this.formBuilder.group({
+        'text': ['', Validators.required]
+      });
+    }
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
-      const questionId = params['id'];
-      this.formService.getQuestion(questionId).subscribe(data => {
+      this.questionId = params['id'];
+      this.formService.getQuestion(this.questionId).subscribe(data => {
         this.question = data;
       });
    });
@@ -27,5 +36,12 @@ export class QuestionDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(){
     this.sub.unsubscribe();
+  }
+
+  onAnswerSubmit(){
+    this.formService.createAnswer(this.answerForm.value.text, this.questionId).subscribe(data => {
+      this.question.answers.push(data);
+    });
+    this.answerForm.reset();
   }
 }
