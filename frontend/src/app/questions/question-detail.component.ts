@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { NotificationsService } from 'angular2-notifications';
@@ -25,6 +25,7 @@ export class QuestionDetailComponent implements OnInit, OnDestroy {
   descriptionEdit: string;
 
   constructor(private forumService: ForumService,
+    private router: Router,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private notifications: NotificationsService,
@@ -80,5 +81,16 @@ export class QuestionDetailComponent implements OnInit, OnDestroy {
     this.isEditable = false;
     this.titleEdit = null;
     this.descriptionEdit = null;
+  }
+
+  onDelete(){
+    this.forumService.deleteQuestion(this.questionId).subscribe(
+      data => {
+        this.router.navigate(['/questions', "me"]);
+      },
+      err => {
+        this.notifications.error("Ops! Something went wrong.", err['error']['detail']);
+      }
+    )
   }
 }
