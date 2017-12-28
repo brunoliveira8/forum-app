@@ -13,16 +13,13 @@ export class ForumService {
   private topicUrl = this.apiUrl + "topics";
   private questionUrl = this.apiUrl + 'questions';
   private answerUrl = this.apiUrl + 'answers';
-  private headers: HttpHeaders;
 
-  constructor(private authService: AuthService, private http: HttpClient) {
-    this.headers = new HttpHeaders().set('Authorization', 'Token ' + this.authService.authToken);
-  }
+  constructor(private authService: AuthService, private http: HttpClient) {}
 
   getTopics(){
     return this.http.get(
       this.topicUrl,
-      { headers: this.headers }
+      { headers: new HttpHeaders().set('Authorization', 'Token ' + this.authService.authToken) }
     )
   }
 
@@ -30,21 +27,24 @@ export class ForumService {
     return this.http.post(
       this.questionUrl,
       { title: title, topics: topics, description: description },
-      { headers: this.headers }
+      { headers: new HttpHeaders().set('Authorization', 'Token ' + this.authService.authToken) }
     )
   }
 
   getQuestion(questionId: string){
     return this.http.get(
       this.questionUrl + "/" + questionId,
-      { headers: this.headers }
+      { headers: new HttpHeaders().set('Authorization', 'Token ' + this.authService.authToken) }
     )
   }
 
   getQuestions(filter:any = {}){
     return this.http.get(
       this.questionUrl,
-      { headers: this.headers, params: filter }
+      {
+        headers: new HttpHeaders().set('Authorization', 'Token ' + this.authService.authToken),
+        params: filter
+      }
     )
   }
 
@@ -52,14 +52,17 @@ export class ForumService {
     return this.http.post(
       this.answerUrl,
       { text: text, question: questionId },
-      { headers: this.headers }
+      { headers: new HttpHeaders().set('Authorization', 'Token ' + this.authService.authToken) }
     )
   }
 
   getAnswers(filter:any = {}){
     return this.http.get(
       this.answerUrl,
-      { headers: this.headers, params: filter }
+      {
+        headers: new HttpHeaders().set('Authorization', 'Token ' + this.authService.authToken),
+        params: filter
+      }
     )
   }
 
