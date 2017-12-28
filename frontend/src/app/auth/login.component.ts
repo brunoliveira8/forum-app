@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, Renderer2 } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { AuthService } from './auth.service';
 import { Subscription } from 'rxjs/Subscription';
@@ -15,7 +16,10 @@ export class LoginComponent implements OnInit,OnDestroy {
   successfulLogin: Subscription;
   loginErrors: any;
 
-  constructor(private authService: AuthService, private formBuilder: FormBuilder, private renderer: Renderer2) {
+  constructor(private authService: AuthService,
+    private formBuilder: FormBuilder,
+    private renderer: Renderer2,
+    private router: Router) {
     this.loginForm = this.formBuilder.group({
       'username': ['', Validators.required],
       'password': ['', Validators.required],
@@ -31,7 +35,7 @@ export class LoginComponent implements OnInit,OnDestroy {
         this.loginErrors = data['messages'];
       }
       else {
-        //navigate to home page
+        this.router.navigate(['/'])
       }
     });
   }
@@ -45,7 +49,6 @@ export class LoginComponent implements OnInit,OnDestroy {
 
   login(){
     this.authService.login(this.loginForm.value.username, this.loginForm.value.password);
-    console.log(this.loginForm);
   }
 
 }
