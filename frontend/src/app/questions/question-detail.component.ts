@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { NotificationsService } from 'angular2-notifications';
 
+import { AuthService } from './../auth/auth.service';
 import { ForumService } from './forum.service';
-import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({
   selector: 'app-question-detail',
@@ -18,6 +18,7 @@ export class QuestionDetailComponent implements OnInit, OnDestroy {
   private questionId;
 
   question: any;
+  autUser: any;
   answerForm: FormGroup;
   isEditable = false;
   titleEdit: string;
@@ -26,7 +27,8 @@ export class QuestionDetailComponent implements OnInit, OnDestroy {
   constructor(private forumService: ForumService,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
-    private notifications: NotificationsService) {
+    private notifications: NotificationsService,
+    public authService: AuthService ) {
       this.answerForm = this.formBuilder.group({
         'text': ['', Validators.required]
       });

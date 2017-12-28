@@ -5,7 +5,7 @@
       <div class="box-header with-border">
         <h3 class="box-title">Question</h3>
         <div class="box-tools pull-right">
-          <ng-container *ngIf="!isEditable">
+          <ng-container *ngIf="!isEditable && question.owner.username == authService.authUser.username">
             <button type="button" class="btn btn-box-tool" (click)="onEdit()">
               <i class="fa fa-pencil-square-o"></i>
             </button>
