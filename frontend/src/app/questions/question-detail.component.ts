@@ -66,7 +66,7 @@ export class QuestionDetailComponent implements OnInit, OnDestroy {
         this.notifications.success("Question was updated succesfully!")
       },
       err => {
-        this.notifications.success("Ops! Something went wrong.")
+        this.notifications.error("Ops! Something went wrong.", err['error']['detail']);
       }
     );
     this.isEditable = false;
