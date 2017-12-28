@@ -21,6 +21,8 @@ import { ForumService } from './questions/forum.service';
 import { QuestionListComponent } from './questions/question-list.component';
 import { MyQuestionsComponent } from './questions/my-questions.component';
 import { QuestionDetailComponent } from './questions/question-detail.component';
+import { AnswerListComponent } from './answers/answer-list.component';
+import { FooterComponent } from './footer.component';
 
 
 @NgModule({
@@ -34,6 +36,8 @@ import { QuestionDetailComponent } from './questions/question-detail.component';
     QuestionListComponent,
     MyQuestionsComponent,
     QuestionDetailComponent,
+    AnswerListComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
