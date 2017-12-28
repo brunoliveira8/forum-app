@@ -56,4 +56,11 @@ export class ForumService {
     )
   }
 
+  getAnswers(filter:any = {}){
+    return this.http.get(
+      this.answerUrl,
+      { headers: this.headers, params: filter }
+    )
+  }
+
 }

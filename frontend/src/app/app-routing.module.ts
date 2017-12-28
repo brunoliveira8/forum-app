@@ -8,6 +8,7 @@ import { QuestionListComponent } from './questions/question-list.component';
 import { QuestionNewComponent } from './questions/question-new.component';
 import { MyQuestionsComponent } from './questions/my-questions.component';
 import { QuestionDetailComponent } from './questions/question-detail.component';
+import { AnswerListComponent } from './answers/answer-list.component';
 import { AuthGuard } from './auth/auth-guard.service';
 
 const routes: Routes = [
@@ -21,7 +22,8 @@ const routes: Routes = [
       { path: 'me', component: MyQuestionsComponent},
       { path: ':id', component: QuestionDetailComponent}
     ]
-  }
+  },
+  { path: 'answers/me', component: AnswerListComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

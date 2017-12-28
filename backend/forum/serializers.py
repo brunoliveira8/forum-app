@@ -13,9 +13,15 @@ class TopicSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class QuestionSummarySerializer(serializers.HyperlinkedModelSerializer):
+    owner = UserSerializer(read_only=True)
+    topics_repr = TopicSerializer(source="topics",
+        many=True,
+        read_only=True
+    )
+
     class Meta:
         model = Question
-        fields = ('id', 'url', 'title', )
+        fields = ('id', 'url', 'owner', 'title', 'description', 'topics_repr', 'created_at', 'updated_at',)
 
 
 class AnswerSerializer(serializers.HyperlinkedModelSerializer):
