@@ -43,10 +43,11 @@ class AnswerViewSet(viewsets.ModelViewSet):
     """
     queryset = Answer.objects.all()
     serializer_class = AnswerSerializer
-    filter_backends = (filters.SearchFilter, filters.OrderingFilter)
+    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
     search_fields = ('text',)
     ordering_fields = ('created_at', 'updated_at',)
     ordering = ('created_at', 'updated_at',)
+    filter_fields = ['owner',]
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
