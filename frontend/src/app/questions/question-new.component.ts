@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-
+import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { ForumService } from './forum.service';
 
 import * as _ from "lodash";
-import { NotificationsService } from 'angular2-notifications';
 
 @Component({
   selector: 'app-question-new',
@@ -18,7 +17,9 @@ export class QuestionNewComponent implements OnInit {
   topics: {id: string, text: string};
   createQuestionErrors: any;
 
-  constructor(private forumService: ForumService, private formBuilder: FormBuilder) {
+  constructor(private forumService: ForumService,
+    private formBuilder: FormBuilder,
+    private router: Router) {
     this.createQuestionForm = this.formBuilder.group({
       'title': ['', Validators.required],
       'topics': ['', Validators.required],
@@ -39,7 +40,9 @@ export class QuestionNewComponent implements OnInit {
       _.map(this.createQuestionForm.value.topics, e => e.id),
       this.createQuestionForm.value.description
     ).subscribe(
-      data => {},
+      data => {
+        this.router.navigate(['/questions', data['id']]);
+      },
       err => {
         this.createQuestionErrors = err['errors'];
       }
