@@ -9,6 +9,7 @@ services:
       - postgres:postgres
     volumes:
       - ./backend:/usr/src/app
+      - /usr/src/app/static
       - /var/www/static:/var/www/static
     env_file: .env
     environment:
