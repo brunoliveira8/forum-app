@@ -2,7 +2,7 @@ version: '2'
 services:
   backend:
     restart: always
-    image: ./backend
+    build: ./backend
     depends_on:
        - postgres
     links:
@@ -20,7 +20,7 @@ services:
 
   nginx:
     restart: always
-    image: ./nginx
+    build: ./nginx
     volumes:
       - /var/www/html:/usr/share/nginx/html
       - /var/www/static:/var/www/static
