@@ -97,9 +97,13 @@ export class QuestionDetailComponent implements OnInit, OnDestroy {
     )
   }
 
-  onAnswerEdit(answer: any){
+  onSelectAnswer(answer: any){
     this.answerSelected = {};
     Object.assign(this.answerSelected, answer);
+  }
+
+  onCancelAnswerSelect(){
+    this.answerSelected = null;
   }
 
   onConfirmAnswerEdit(){
@@ -113,9 +117,20 @@ export class QuestionDetailComponent implements OnInit, OnDestroy {
         this.notifications.error("Ops! Something went wrong.", err['error']['detail']);
       }
     );
+
+    this.onCancelAnswerSelect();
   }
 
-  onAnswerDelete(answerId: string){
-
+  onConfirmAnswerDelete(answer: any){
+    this.forumService.deleteAnswer(this.answerSelected.id).subscribe(
+      data => {
+        this.question.answers = _.remove(this.question.answers, answer => answer.id != this.answerSelected.id);
+        this.notifications.success("Answer was delete succesfully!")
+      },
+      err => {
+        this.notifications.error("Ops! Something went wrong.", err['error']['detail']);
+      }
+    );
+    this.onCancelAnswerSelect();
   }
 }

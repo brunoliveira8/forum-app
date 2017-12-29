@@ -61,10 +61,10 @@
             <span class="username">
               {{answer.owner.username}}
               <ng-container *ngIf="answer.owner.username == authService.authUser.username">
-                <button type="button" class="btn btn-box-tool" data-toggle="modal" data-target="#edit-answer" (click)="onAnswerEdit(answer)">
+                <button type="button" class="btn btn-box-tool" data-toggle="modal" data-target="#edit-answer" (click)="onSelectAnswer(answer)">
                     <i class="fa fa-pencil-square-o"></i>
                 </button>
-                <button type="button" class="btn btn-box-tool" data-toggle="modal" data-target="#confirm-delete-answer">
+                <button type="button" class="btn btn-box-tool" data-toggle="modal" data-target="#confirm-delete-answer" (click)="onSelectAnswer(answer)">
                     <i class="fa fa-times"></i>
                 </button>
               </ng-container>
@@ -129,7 +129,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">No</button>
-          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="onDelete()" >Yes</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="onConfirmAnswerDelete()" >Yes</button>
         </div>
       </div>
       <!-- /.modal-content -->
@@ -149,8 +149,8 @@
             <input type="text" class="form-control" (input)="answerSelected.text = $event.target.value" [value]="answerSelected.text">
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">No</button>
-          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="onConfirmAnswerEdit()" >Yes</button>
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="onCancelAnswerSelect()">Cancel</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="onConfirmAnswerEdit()"> Save</button>
         </div>
       </div>
       <!-- /.modal-content -->

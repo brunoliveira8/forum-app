@@ -79,6 +79,13 @@ export class ForumService {
     )
   }
 
+  deleteAnswer(answerId: string){
+    return this.http.delete(
+      this.answerUrl + "/" + answerId,
+      { headers: new HttpHeaders().set('Authorization', 'Token ' + this.authService.authToken) }
+    )
+  }
+
   getAnswers(filter:any = {}){
     return this.http.get(
       this.answerUrl,
