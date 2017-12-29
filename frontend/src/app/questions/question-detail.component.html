@@ -21,7 +21,7 @@
               <a [routerLink]="['/questions', question.id]">{{question.title}}</a>
             </span>
             <span class="username" *ngIf="isEditable">
-              <input #title type="text" class="form-control" (input)="titleEdit = $event.target.value" [value]="question.title">
+              <input type="text" class="form-control" (input)="titleEdit = $event.target.value" [value]="question.title">
             </span>
             <span class="description">{{question.owner.username}} - {{question.created_at | date:'short'}}</span>
           </div>
@@ -44,9 +44,9 @@
           </ul>
         </div>
         <ng-container *ngIf="isEditable">
-          <button class="btn btn-sm btn-success" (click)="onEditSave(title)">Save</button>
+          <button class="btn btn-sm btn-success" (click)="onEditSave()">Save</button>
           <button class="btn btn-sm btn-default" (click)="onEditCancel()">Cancel</button>
-          <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirm-delete">
+          <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirm-delete-question">
             Delete
           </button>
         </ng-container>
@@ -60,6 +60,14 @@
           <div class="comment-text">
             <span class="username">
               {{answer.owner.username}}
+              <ng-container *ngIf="answer.owner.username == authService.authUser.username">
+                <button type="button" class="btn btn-box-tool" data-toggle="modal" data-target="#edit-answer" (click)="onAnswerEdit(answer)">
+                    <i class="fa fa-pencil-square-o"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-toggle="modal" data-target="#confirm-delete-answer">
+                    <i class="fa fa-times"></i>
+                </button>
+              </ng-container>
               <span class="text-muted pull-right">{{ answer.created_at | date:'short' }}</span>
             </span>
             <!-- /.username -->
@@ -87,7 +95,7 @@
 </div>
 <!-- /.container -->
 
-<div class="modal fade" id="confirm-delete" style="display: none;">
+<div class="modal fade" id="confirm-delete-question" style="display: none;">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -96,7 +104,7 @@
           <h4 class="modal-title">Would you like to delete this question?</h4>
         </div>
         <div class="modal-body">
-          <p>This action can not be undo.</p>
+          <p>This action cannot be undone.</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">No</button>
@@ -106,5 +114,47 @@
       <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
-  </div>
+</div>
+
+<div class="modal fade" id="confirm-delete-answer" style="display: none;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span></button>
+          <h4 class="modal-title">Would you like to delete this answer?</h4>
+        </div>
+        <div class="modal-body">
+          <p>This action cannot be undone.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">No</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="onDelete()" >Yes</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="edit-answer" style="display: none;" *ngIf="answerSelected">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span></button>
+          <h4 class="modal-title">Edit Answer</h4>
+        </div>
+        <div class="modal-body">
+            <input type="text" class="form-control" (input)="answerSelected.text = $event.target.value" [value]="answerSelected.text">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">No</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="onConfirmAnswerEdit()" >Yes</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
 <simple-notifications></simple-notifications>
