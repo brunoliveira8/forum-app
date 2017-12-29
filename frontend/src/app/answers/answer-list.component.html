@@ -12,7 +12,7 @@
         </h1>
       </section>
       <!-- Main content -->
-      <section class="content">
+      <section class="content" *ngIf="myAnswers">
         <div class="box box-primary" *ngIf="myAnswers.length == 0">
           <div class="box-body">
             <div class="callout callout-info">
