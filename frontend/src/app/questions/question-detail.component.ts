@@ -122,9 +122,10 @@ export class QuestionDetailComponent implements OnInit, OnDestroy {
   }
 
   onConfirmAnswerDelete(){
+    const answerSelected = this.answerSelected;
     this.forumService.deleteAnswer(this.answerSelected.id).subscribe(
       data => {
-        this.question.answers = _.remove(this.question.answers, answer => answer.id != this.answerSelected.id);
+        this.question.answers = _.remove(this.question.answers, answer => answer.id != answerSelected.id);
         this.notifications.success("Answer was delete succesfully!")
       },
       err => {
