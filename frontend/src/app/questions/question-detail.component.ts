@@ -7,6 +7,8 @@ import { NotificationsService } from 'angular2-notifications';
 import { AuthService } from './../auth/auth.service';
 import { ForumService } from './forum.service';
 
+import * as _ from 'lodash';
+
 @Component({
   selector: 'app-question-detail',
   templateUrl: './question-detail.component.html',
@@ -23,6 +25,7 @@ export class QuestionDetailComponent implements OnInit, OnDestroy {
   isEditable = false;
   titleEdit: string;
   descriptionEdit: string;
+  answerSelected: any;
 
   constructor(private forumService: ForumService,
     private router: Router,
@@ -92,5 +95,27 @@ export class QuestionDetailComponent implements OnInit, OnDestroy {
         this.notifications.error("Ops! Something went wrong.", err['error']['detail']);
       }
     )
+  }
+
+  onAnswerEdit(answer: any){
+    this.answerSelected = {};
+    Object.assign(this.answerSelected, answer);
+  }
+
+  onConfirmAnswerEdit(){
+    this.forumService.updateAnswer(this.answerSelected.id, this.answerSelected.text).subscribe(
+      data => {
+        const answerIndex = _.findIndex(this.question.answers, answer => answer.id ==  data['id']);
+        this.question.answers[answerIndex].text = data['text'];
+        this.notifications.success("Answer was updated succesfully!")
+      },
+      err => {
+        this.notifications.error("Ops! Something went wrong.", err['error']['detail']);
+      }
+    );
+  }
+
+  onAnswerDelete(answerId: string){
+
   }
 }

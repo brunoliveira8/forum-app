@@ -71,6 +71,14 @@ export class ForumService {
     )
   }
 
+  updateAnswer(answerId: string, text: string) {
+    return this.http.patch(
+      this.answerUrl + "/" + answerId,
+      { text: text},
+      { headers: new HttpHeaders().set('Authorization', 'Token ' + this.authService.authToken) }
+    )
+  }
+
   getAnswers(filter:any = {}){
     return this.http.get(
       this.answerUrl,
