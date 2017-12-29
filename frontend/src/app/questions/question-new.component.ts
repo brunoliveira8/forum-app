@@ -34,7 +34,6 @@ export class QuestionNewComponent implements OnInit {
   }
 
   onSubmit(){
-    console.log(this.createQuestionForm.value);
     this.forumService.createQuestion(
       this.createQuestionForm.value.title,
       _.map(this.createQuestionForm.value.topics, e => e.id),
