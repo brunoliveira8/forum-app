@@ -1,0 +1,160 @@
+<div class="container">
+  <!-- Main content -->
+  <section class="content">
+    <div class="box box-primary" *ngIf="question">
+      <div class="box-header with-border">
+        <h3 class="box-title">Question</h3>
+        <div class="box-tools pull-right">
+          <ng-container *ngIf="!isEditable && question.owner.username == authService.authUser.username">
+            <button type="button" class="btn btn-box-tool" (click)="onEdit()">
+              <i class="fa fa-pencil-square-o"></i>
+            </button>
+          </ng-container>
+
+        </div>
+      </div>
+      <div class="box-body">
+        <div class="post">
+          <div class="user-block">
+            <img class="img-circle img-bordered-sm" src="/assets/img/user.png" alt="user image">
+            <span class="username" *ngIf="!isEditable">
+              <a [routerLink]="['/questions', question.id]">{{question.title}}</a>
+            </span>
+            <span class="username" *ngIf="isEditable">
+              <input type="text" class="form-control" (input)="titleEdit = $event.target.value" [value]="question.title">
+            </span>
+            <span class="description">{{question.owner.username}} - {{question.created_at | date:'short'}}</span>
+          </div>
+          <!-- /.user-block -->
+          <p *ngIf="!isEditable">
+            {{ question.description }}
+          </p>
+          <ng-container *ngIf="isEditable">
+            <textarea class="form-control" rows="3" (input)="descriptionEdit = $event.target.value" [value]="question.description"></textarea>
+          </ng-container>
+          <ul class="list-inline">
+            <li *ngFor="let t of question.topics_repr">
+              <span class="label label-primary">{{t.name}}</span>
+            </li>
+            <li class="pull-right">
+              <span class="text-sm">
+                <i class="fa fa-comments-o margin-r-5"></i> Answers ({{question.answers.length}})
+              </span>
+            </li>
+          </ul>
+        </div>
+        <ng-container *ngIf="isEditable">
+          <button class="btn btn-sm btn-success" (click)="onEditSave()">Save</button>
+          <button class="btn btn-sm btn-default" (click)="onEditCancel()">Cancel</button>
+          <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#confirm-delete-question">
+            Delete
+          </button>
+        </ng-container>
+      </div>
+      <!-- /.box-body -->
+      <div class="box-footer box-comments" *ngIf="question.answers.length > 0">
+        <div class="box-comment" *ngFor="let answer of question.answers">
+          <!-- User image -->
+          <img class="img-circle img-sm" src="/assets/img/user.png" alt="User Image">
+
+          <div class="comment-text">
+            <span class="username">
+              {{answer.owner.username}}
+              <ng-container *ngIf="answer.owner.username == authService.authUser.username">
+                <button type="button" class="btn btn-box-tool" data-toggle="modal" data-target="#edit-answer" (click)="onSelectAnswer(answer)">
+                    <i class="fa fa-pencil-square-o"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-toggle="modal" data-target="#confirm-delete-answer" (click)="onSelectAnswer(answer)">
+                    <i class="fa fa-times"></i>
+                </button>
+              </ng-container>
+              <span class="text-muted pull-right">{{ answer.created_at | date:'short' }}</span>
+            </span>
+            <!-- /.username -->
+            {{ answer.text }}
+          </div>
+          <!-- /.comment-text -->
+        </div>
+        <!-- /.box-comment -->
+      </div>
+      <div class="box-footer">
+        <form class="form-horizontal" [formGroup]="answerForm" (submit)="onAnswerSubmit()">
+          <div class="form-group margin-bottom-none">
+            <div class="col-sm-9">
+              <textarea class="form-control input-sm" rows="3" placeholder="Response..." formControlName="text"></textarea>
+            </div>
+            <div class="col-sm-3">
+              <button type="submit" class="btn btn-danger pull-right btn-block btn-sm" [disabled]="!answerForm.valid">Send</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+  <!-- /.content -->
+</div>
+<!-- /.container -->
+
+<div class="modal fade" id="confirm-delete-question" style="display: none;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span></button>
+          <h4 class="modal-title">Would you like to delete this question?</h4>
+        </div>
+        <div class="modal-body">
+          <p>This action cannot be undone.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">No</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="onDelete()" >Yes</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="confirm-delete-answer" style="display: none;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span></button>
+          <h4 class="modal-title">Would you like to delete this answer?</h4>
+        </div>
+        <div class="modal-body">
+          <p>This action cannot be undone.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">No</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="onConfirmAnswerDelete()" >Yes</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="edit-answer" style="display: none;" *ngIf="answerSelected">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span></button>
+          <h4 class="modal-title">Edit Answer</h4>
+        </div>
+        <div class="modal-body">
+            <textarea class="form-control" rows="3" (input)="answerSelected.text = $event.target.value" [value]="answerSelected.text"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="onCancelAnswerSelect()">Cancel</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="onConfirmAnswerEdit()"> Save</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<simple-notifications></simple-notifications>

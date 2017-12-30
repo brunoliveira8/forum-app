@@ -1,0 +1,73 @@
+<div class="wrapper">
+
+  <app-header></app-header>
+
+  <!-- Full Width Column -->
+  <div class="content-wrapper">
+    <div class="container">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <h1>
+          My Answers
+        </h1>
+      </section>
+      <!-- Main content -->
+      <section class="content" *ngIf="myAnswers">
+        <div class="box box-primary" *ngIf="myAnswers.length == 0">
+          <div class="box-body">
+            <div class="callout callout-info">
+              <h4>No answer found</h4>
+            </div>
+          </div>
+        </div>
+        <div class="box box-primary" *ngFor="let answer of myAnswers">
+          <div class="box-body">
+            <div class="post">
+              <div class="user-block">
+                <img class="img-circle img-bordered-sm" src="/assets/img/user.png" alt="user image">
+                <span class="username">
+                  <a [routerLink]="['/questions', answer.question_repr.id]">{{answer.question_repr.title}}</a>
+                </span>
+                <span class="description">{{answer.question_repr.owner.username}} - {{answer.question_repr.created_at | date:'short'}}</span>
+              </div>
+              <!-- /.user-block -->
+              <p>
+                {{ answer.question_repr.description }}
+              </p>
+              <ul class="list-inline">
+                <li *ngFor="let t of answer.question_repr.topics_repr">
+                  <span class="label label-primary">{{t.name}}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- /.box-body -->
+          <div class="box-footer box-comments">
+            <div class="box-comment">
+              <!-- User image -->
+              <img class="img-circle img-sm" src="/assets/img/user.png" alt="User Image">
+
+              <div class="comment-text">
+                <span class="username">
+                  {{answer.owner.username}}
+                  <span class="text-muted pull-right">{{ answer.created_at | date:'short' }}</span>
+                </span>
+                <!-- /.username -->
+                {{ answer.text }}
+              </div>
+              <!-- /.comment-text -->
+            </div>
+            <!-- /.box-comment -->
+          </div>
+        </div>
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.container -->
+
+    <!-- /.container -->
+  </div>
+  <!-- /.content-wrapper -->
+  <app-footer></app-footer>
+</div>
+<!-- ./wrapper -->

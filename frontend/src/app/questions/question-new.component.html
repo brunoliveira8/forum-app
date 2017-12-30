@@ -1,0 +1,45 @@
+<div class="container">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      New Question
+    </h1>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+      <div class="box box-primary">
+          <!-- /.box-header -->
+          <!-- form start -->
+          <form [formGroup]="createQuestionForm" (submit)="onSubmit()">
+            <p class="text-red" *ngFor="let err of createQuestionErrors?.non_field_errors">{{ err }}</p>
+            <div class="box-body">
+              <div class="form-group">
+                <label>Title</label>
+                <input type="text" class="form-control" formControlName="title">
+                <p class="text-red" *ngFor="let err of createQuestionErrors?.title">{{ err }}</p>
+              </div>
+              <div class="form-group">
+                  <label>Topics</label>
+                  <ng-select [multiple]="true"
+                    [items]="topics"
+                    formControlName="topics">
+                  </ng-select>
+                  <p class="text-red" *ngFor="let err of createQuestionErrors?.topics">{{ err }}</p>
+                </div>
+              <div class="form-group">
+                  <label>Description</label>
+                  <textarea class="form-control" rows="3" formControlName="description"></textarea>
+                  <p class="text-red" *ngFor="let err of createQuestionErrors?.description">{{ err }}</p>
+                </div>
+            </div>
+            <!-- /.box-body -->
+
+            <div class="box-footer">
+              <button type="submit" class="btn btn-primary" [disabled]="!createQuestionForm.valid">Submit</button>
+            </div>
+          </form>
+        </div>
+  </section>
+  <!-- /.content -->
+</div>
