@@ -18,6 +18,7 @@ from django.contrib import admin
 
 from rest_framework import routers
 from rest_framework.documentation import include_docs_urls
+from rest_framework import permissions
 
 from forum.views import TopicViewSet, QuestionViewSet, AnswerViewSet
 
@@ -28,7 +29,7 @@ router.register(r'answers', AnswerViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^api-docs/', include_docs_urls(title='Forum App API')),
+    url(r'^api-docs/', include_docs_urls(title='Forum App API',  permission_classes=(permissions.AllowAny,))),
     url(r'^api-auth/', include('djoser.urls')),
     url(r'^api-auth/', include('djoser.urls.authtoken')),
     url(r'^api/', include(router.urls)),
